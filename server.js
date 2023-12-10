@@ -1,11 +1,16 @@
 const express = require('express');
 const cors = require('cors')
-const corsOption = require('./config/corsConfig')
+const corsOption = require('./config/corsOption')
 const connectDB = require('./db/dbConnection')
 const { logger } = require('./middleware/logEvents')
 const errorHandler = require('./middleware/errorHandler')
+const verifyToken = require('./middleware/verifyToken')
+const credentials = require('./middleware/credentials')
 const auth = require('./routes/auth')
 const user = require('./routes/user')
+const refresh = require('./routes/refresh')
+const logout = require('./routes/lougout')
+const cookieParser = require('cookie-parser')
 
 require('dotenv').config()
 
@@ -17,12 +22,17 @@ connectDB(uri)
 
 // Middlewares
 app.use(logger)
+app.use(credentials)
 app.use(cors(corsOption))
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
+app.use(cookieParser())
 
 // APIs
 app.use('/account', auth)
+app.use('/refresh', refresh)
+app.use('/logout', logout)
+app.use(verifyToken)
 app.use('/user', user)
 
 // Middlewares

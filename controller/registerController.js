@@ -1,8 +1,6 @@
 const User = require('../db/userModel')
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
-
-const jwtKey = process.env.JWT_KEY
+const { genAccessToken, genRefreshToken } = require('./tokenController')
 
 const registerNewUser = async (req, res) => {
     const { name, email, username, password } = req.body
@@ -13,19 +11,17 @@ const registerNewUser = async (req, res) => {
         bcrypt.hash(password, saltRounds).then((hash) => {
             const user = new User({ name, email, username, password: hash })
             user.save()
-                .then(() => {
-                    jwt.sign({ user }, jwtKey, { expiresIn: '2h' }, (error, token) => {
-                        if (token) {
-                            res.status(201).json({
-                                message: 'Registration Successful',
-                                ...user._doc,
-                                password: 'redacted',
-                                token
-                            })
-                        } else {
-                            res.json({ error: 'Something went wrong. Please refresh and try again.' })
-                        }
+                .then(async () => {
+                    const refreshToken = genRefreshToken(user.username)
+                    res.cookie('jwt', refreshToken, {httpOnly: true, sameSite: 'None', secure: true, maxAge: 2 * 60 * 60 * 1000})
+                    res.json({
+                        message: 'Registration Successful',
+                        token: genAccessToken(user.username),
+                        // ...user._doc,
+                        // password: '*******'
                     })
+                    user.refreshToken = refreshToken
+                    await user.save()
                 })
                 .catch(err => res.status(400).json('Error: ' + err))
         })
