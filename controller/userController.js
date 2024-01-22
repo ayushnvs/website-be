@@ -1,8 +1,8 @@
 const User = require('../db/userModel')
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
+// const bcrypt = require('bcrypt')
+// const jwt = require('jsonwebtoken')
 
-const jwtKey = process.env.JWT_KEY
+// const jwtKey = process.env.JWT_KEY
 
 const getAUserData = async (req, res) => {
     const username = req.params.username
