@@ -33,9 +33,9 @@ app.use(cookieParser())
 app.use('/account', auth)
 app.use('/refresh', refresh)
 app.use('/logout', logout)
-app.use('/kosh', dictionary)
 app.use(verifyToken)
 app.use('/user', user)
+app.use('/kosh', dictionary)
 
 // Middlewares
 app.use(errorHandler)

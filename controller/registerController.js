@@ -1,6 +1,7 @@
 const User = require('../db/userModel')
 const bcrypt = require('bcrypt')
 const { genAccessToken, genRefreshToken } = require('./tokenController')
+require('dotenv').config()
 
 const registerNewUser = async (req, res) => {
     const { name, email, username, password } = req.body
@@ -13,7 +14,7 @@ const registerNewUser = async (req, res) => {
             user.save()
                 .then(async () => {
                     const refreshToken = genRefreshToken(user.username)
-                    res.cookie('jwt', refreshToken, {httpOnly: true, sameSite: 'None', secure: true, maxAge: 2 * 60 * 60 * 1000})
+                    res.cookie('jwt', refreshToken, {httpOnly: true, sameSite: 'None', secure: process.env.NODE_ENV !== "dev", maxAge: 2 * 60 * 60 * 1000})
                     res.json({
                         message: 'Registration Successful',
                         token: genAccessToken(user.username),

@@ -20,6 +20,7 @@ const genRefreshToken = (username) => {
 
 const handleRefreshToken = async (req, res) => {
     const cookies = req.cookies
+    console.log('Cookies-be: ', cookies)
     if (!cookies.jwt) return res.sendStatus(401)
     const refreshToken = cookies.jwt
     const foundUser = await User.findOne({ refreshToken })
