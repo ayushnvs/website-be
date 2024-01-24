@@ -1,7 +1,6 @@
 const User = require('../db/userModel')
 const bcrypt = require('bcrypt')
 const { genAccessToken, genRefreshToken } = require('./tokenController')
-require('dotenv').config()
 
 const isUsernameAvailable = async (req, res) => {
     const { username } = req.body
@@ -24,7 +23,7 @@ const handleLogin = async (req, res) => {
         bcrypt.compare(password, user.password).then(async result => {
             if (result) {
                 const refreshToken = genRefreshToken(user.username)
-                res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', secure: process.env.NODE_ENV !== "dev", maxAge: 2 * 60 * 60 * 1000 })
+                res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 2 * 60 * 60 * 1000 })
                 res.json({
                     message: 'Login Successful',
                     token: genAccessToken(user.username),
