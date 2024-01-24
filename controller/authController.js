@@ -26,9 +26,7 @@ const handleLogin = async (req, res) => {
                 res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 2 * 60 * 60 * 1000 })
                 res.json({
                     message: 'Login Successful',
-                    token: genAccessToken(user.username),
-                    // ...user._doc, 
-                    // password: '*******'
+                    token: genAccessToken(user.username)
                 })
                 user.refreshToken = refreshToken
                 await user.save()
