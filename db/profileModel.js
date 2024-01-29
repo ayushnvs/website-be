@@ -1,0 +1,28 @@
+const mongoose = require('mongoose')
+
+const ProfileSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+    },
+    email: {
+        type: String,
+        unique: true
+    },
+    username: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    profileImg: {
+        type: String
+    },
+    socialMedia: {
+        type: Map,
+        of: String
+    }
+})
+
+const Profile = mongoose.model('Profile', ProfileSchema)
+
+module.exports = Profile

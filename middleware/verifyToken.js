@@ -2,10 +2,9 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config();
 
 const verifyToken = (req, res, next) => {
-    const authHeader = req.headers['Authorization']
+    const authHeader = req.headers['authorization']
 
     if (!authHeader) return res.status(401).send({ message: 'Invalid request: Authorization token missing' })
-    console.log(authHeader)
 
     const token = authHeader.split(' ')[1]
     jwt.verify(

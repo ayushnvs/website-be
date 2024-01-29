@@ -11,6 +11,7 @@ const user = require('./routes/user')
 const refresh = require('./routes/refresh')
 const logout = require('./routes/lougout')
 const dictionary = require('./routes/dictionary')
+const profile = require('./routes/profile')
 const cookieParser = require('cookie-parser')
 
 require('dotenv').config()
@@ -35,6 +36,7 @@ app.use('/refresh', refresh)
 app.use('/logout', logout)
 app.use(verifyToken)
 app.use('/user', user)
+app.use('/profile', profile)
 app.use('/kosh', dictionary)
 
 // Middlewares

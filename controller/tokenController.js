@@ -31,8 +31,7 @@ const handleRefreshToken = async (req, res) => {
         (err, decoded) => {
             if(err || foundUser.username !== decoded.username) return res.sendStatus(403)
             const accessToken = genAccessToken(decoded.username)
-            console.log(accessToken)
-            res.json({ token: accessToken })
+            res.json({ token: accessToken, username: foundUser.username })
         }
     )
 }
