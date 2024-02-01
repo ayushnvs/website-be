@@ -17,6 +17,12 @@ const ProfileSchema = new mongoose.Schema({
     profileImg: {
         type: String
     },
+    phone: {
+        type: String
+    },
+    address: {
+        type: String
+    },
     socialMedia: {
         type: Map,
         of: String
