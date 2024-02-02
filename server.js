@@ -27,7 +27,7 @@ app.use(logger)
 app.use(credentials)
 app.use(cors(corsOption))
 app.use(express.urlencoded({ extended: false }))
-app.use(express.json())
+app.use(express.json({limit: '500kb'}))
 app.use(cookieParser())
 
 // APIs

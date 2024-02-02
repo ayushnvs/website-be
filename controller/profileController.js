@@ -11,9 +11,9 @@ const getProfileInfo = async (req, res) => {
 }
 
 const updateProfile = async (req, res) => {
-    const { name, email, username, profileImg, phone, address, socialMedia } = req.body
+    const username = req.params.username
+    const { name, email, profileImg, phone, address, socialMedia } = req.body
     const profile = await Profile.findOne({ username })
-    console.log(profile)
     if (profile) {
         if (name) profile.name = name
         if (email) profile.email = email
