@@ -26,6 +26,9 @@ const ProfileSchema = new mongoose.Schema({
     socialMedia: {
         type: Map,
         of: String
+    },
+    position: {
+        type: String,
     }
 })
 

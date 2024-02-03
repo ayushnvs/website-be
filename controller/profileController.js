@@ -12,7 +12,7 @@ const getProfileInfo = async (req, res) => {
 
 const updateProfile = async (req, res) => {
     const username = req.params.username
-    const { name, email, profileImg, phone, address, socialMedia } = req.body
+    const { name, email, profileImg, phone, address, socialMedia, position } = req.body
     const profile = await Profile.findOne({ username })
     if (profile) {
         if (name) profile.name = name
@@ -21,6 +21,7 @@ const updateProfile = async (req, res) => {
         if (phone) profile.phone = phone
         if (address) profile.address = address
         if (socialMedia) profile.socialMedia = socialMedia
+        if (position) profile.position = position
         profile.save()
             .then(() => res.sendStatus(200))
     }
